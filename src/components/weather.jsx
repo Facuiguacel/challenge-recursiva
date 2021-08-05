@@ -8,7 +8,9 @@ import {
 class Weather extends Component {
   state = { searchQuery: "" };
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    await console.log(getWeatherByCityName("London"));
+  }
 
   handleSearchChange = (query) => {
     this.setState({
@@ -19,7 +21,6 @@ class Weather extends Component {
   handleWeatherSearch = () => {};
 
   render() {
-    console.log(getWeatherByCityName("London"));
     const { searchQuery } = this.state;
     return <SearchBox value={searchQuery} onChange={this.handleSearchChange} />;
   }

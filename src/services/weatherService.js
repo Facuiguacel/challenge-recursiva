@@ -1,7 +1,7 @@
 import http from "../services/httpService";
 import { apiEndpoint, apiWeather, apiKey } from "../config.json";
 
-const apiWeatherKey = apiWeather + "appid=" + apiKey;
+const apiWeatherKey = `${apiWeather}appid=${apiKey}`;
 
 export function getWeatherByCityName(cityName) {
   return http.get(`${apiWeatherKey}&q=${cityName}`);
