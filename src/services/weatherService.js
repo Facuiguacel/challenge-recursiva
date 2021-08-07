@@ -1,12 +1,14 @@
-import http from "../services/httpService";
-import { apiEndpoint, apiWeather, apiKey } from "../config.json";
+import { currentWeatherEP, apiKey } from "../apiEndpoints.json";
+import API from "./API";
 
-const apiWeatherKey = `${apiWeather}appid=${apiKey}`;
+const apiWeatherAuth = `${currentWeatherEP}appid=${apiKey}&lang=es&units=metric`;
 
-export function getWeatherByCityName(cityName) {
-  return http.get(`${apiWeatherKey}&q=${cityName}`);
+export async function getWeatherByCityName(name) {
+  const { data } = await API.get(`${apiWeatherAuth}&q=${name}`);
+  return data;
 }
 
-export function getWeatherByCityID(id) {
-  return http.get(`${apiWeatherKey}&id=${id}`);
+export async function getWeatherByCityID(id) {
+  const { data } = await API.get(`${apiWeatherAuth}&id=${id}`);
+  return data;
 }

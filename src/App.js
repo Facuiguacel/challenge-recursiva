@@ -1,12 +1,15 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Weather from "./components/weather";
 import NotFound from "./components/notFound";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 function App() {
   return (
     <React.Fragment>
+      <ToastContainer />
       <main className="container">
         <Switch>
           <Route path="/weather" component={Weather} />
