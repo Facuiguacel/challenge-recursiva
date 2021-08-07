@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { apiKey } from "../apiEndpoints.json";
 import { toast } from "react-toastify";
 
 const instance = axios.create({
