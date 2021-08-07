@@ -2,92 +2,89 @@ import React, { Component } from "react";
 import SearchBox from "./common/searchBox";
 import { getWeatherByCityName } from "./../services/weatherService";
 import CurrentWeatherGraphics from "./currentWeatherGraphics";
+import { toast } from "react-toastify";
 import "../css/weather.css";
 
 class Weather extends Component {
-  state = { weatherInfo: {}, isLoading: true, ciudadEncontrada: true };
+  state = { weatherInfo: {}, isSearching: false, ciudadEncontrada: true };
 
   async componentDidMount() {
-    const weatherInfo = this.formatWeatherData(
-      await getWeatherByCityName("Capitan Sarmiento, AR")
-    );
-    if (weatherInfo) {
-      this.setState({ weatherInfo, isLoading: false });
-    }
+    this.handleSearch("Capitan Sarmiento, AR");
   }
 
   handleSearch = async (query) => {
-    this.setState({ isLoading: true });
+    this.setState({ isSearching: true });
     try {
       const weatherInfo = this.formatWeatherData(
         await getWeatherByCityName(query)
       );
-      this.setState({ ciudadEncontrada: true, weatherInfo, isLoading: false });
+      this.setState({
+        weatherInfo,
+        isSearching: false,
+        ciudadEncontrada: true,
+      });
     } catch (ex) {
-      if (ex.response && ex.response.status === 404) {
-        this.setState({ ciudadEncontrada: false, isLoading: false });
-        console.log("Ciudad no encontrada");
-      }
+      if (ex.response)
+        if (ex.response.status === 404) {
+          this.setState({ ciudadEncontrada: false });
+          console.log("Ciudad no encontrada");
+        } else {
+          console.log("Error al contactar con el servidor");
+          toast.error("Error al contactar con el servidor. Intente mas tarde.");
+        }
+      this.setState({ isSearching: false });
     }
   };
 
   formatWeatherData = (data) => {
-    console.log(data);
-    const {
-      temp,
-      humidity: humedad,
-      pressure: presion,
-      feels_like: sensTerm,
-    } = data.main;
-    const { name: ciudad, visibility: visibilidad } = data;
-    const { speed: velViento, deg: dirViento } = data.wind;
-    const { country: pais, sunrise, sunset } = data.sys;
     var date = new Date(0);
     date.setSeconds(data.dt + data.timezone);
     const hora = date.toISOString().substr(11, 5);
     date = new Date(0);
-    date.setSeconds(sunrise + data.timezone);
+    date.setSeconds(data.sys.sunrise + data.timezone);
     const amanecer = date.toISOString().substr(11, 5);
     date = new Date(0);
-    date.setSeconds(sunset + data.timezone);
+    date.setSeconds(data.sys.sunset + data.timezone);
     const atardecer = date.toISOString().substr(11, 5);
 
     const clima = data.weather[0].main;
     const descripcion =
       data.weather[0].description.charAt(0).toUpperCase() +
       data.weather[0].description.slice(1);
-    const puntoRocio = temp - (100 - humedad) / 5;
+    const puntoRocio = data.main.temp - (100 - data.main.humidity) / 5;
 
-    const dataReady = {
-      ciudad: ciudad,
-      pais: pais,
+    const weatherInfo = {
+      ciudad: data.name,
+      pais: data.sys.country,
       hora: hora,
-      temp: Math.round(temp),
-      sensTerm: Math.round(sensTerm),
+      temp: Math.round(data.main.temp),
+      sensTerm: Math.round(data.main.feels_like),
       clima: clima,
       descripcion: descripcion,
-      humedad: humedad,
+      humedad: data.main.humidity,
       puntoRocio: Math.round(puntoRocio),
-      presion: presion,
-      visibilidad: Math.round(visibilidad / 100) / 10,
-      velViento: Math.round(velViento * 3.6),
-      dirViento: dirViento,
+      presion: data.main.pressure,
+      visibilidad: Math.round(data.visibility / 100) / 10,
+      velViento: Math.round(data.wind.speed * 3.6),
+      dirViento: data.wind.deg,
       atardecer: atardecer,
       amanecer: amanecer,
     };
 
-    return dataReady;
+    return weatherInfo;
   };
 
   render() {
-    const { isLoading, weatherInfo, ciudadEncontrada } = this.state;
+    const { isSearching, weatherInfo, ciudadEncontrada } = this.state;
     return (
       <React.Fragment>
-        <SearchBox onSearch={this.handleSearch} />
-        {!ciudadEncontrada && (
-          <h5 className="errorFont">Ciudad no encontrada</h5>
-        )}
-        <CurrentWeatherGraphics info={weatherInfo} isLoading={isLoading} />
+        <div className="container">
+          <SearchBox onSearch={this.handleSearch} isSearching={isSearching} />
+          {!ciudadEncontrada && !isSearching && (
+            <h5 className="errorFont">Ciudad no encontrada</h5>
+          )}
+          <CurrentWeatherGraphics weatherInfo={weatherInfo} />
+        </div>
       </React.Fragment>
     );
   }
