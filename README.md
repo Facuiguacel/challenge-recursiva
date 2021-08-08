@@ -7,6 +7,4 @@ Solución al desafio puesto por Recursiva como parte de una entrevista de trabaj
 Tener `Node.js` para instalar las dependencias con el comando:
 ### `npm i`
 
-## Ejecución
-Ejecutar:
-### `npm start`
+## Ejecución ### `npm start`
