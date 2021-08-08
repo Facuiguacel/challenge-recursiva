@@ -4,8 +4,7 @@ Solución al desafio puesto por Recursiva como parte de una entrevista de trabaj
 
 ## Requisitos para ejecutar
 
-Instalar `Node.js` si no lo tienen.
-Luego pararse en el repositorio desde una consola y ejecutar:
+Instalar `Node.js` para instalar las dependencias con el comando:
 ### `npm i`
 
 ## Ejecución
