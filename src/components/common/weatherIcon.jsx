@@ -4,8 +4,9 @@ import cloud from "../../include/img/weather_icons/cloud.png";
 import rain from "../../include/img/weather_icons/rain.png";
 import snowy from "../../include/img/weather_icons/snowy.png";
 import thunderstorm from "../../include/img/weather_icons/thunderstorm.png";
-import placeholder from "../../include/img/weather_icons/placeholder.png";
 import tornado from "../../include/img/weather_icons/hurricane.png";
+import mist from "../../include/img/weather_icons/mist.png";
+import placeholder from "../../include/img/weather_icons/placeholder.png";
 
 const WeatherIcon = ({ weather }) => {
   switch (weather) {
@@ -23,6 +24,8 @@ const WeatherIcon = ({ weather }) => {
       return <img src={rain} alt="" />;
     case "Tornado":
       return <img src={tornado} alt="" />;
+    case "Mist":
+      return <img src={mist} alt="" />;
     default:
       return <img src={placeholder} alt="" />;
   }

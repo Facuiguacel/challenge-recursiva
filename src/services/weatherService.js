@@ -9,7 +9,7 @@ export async function getWeatherByCityName(name) {
   return data;
 }
 
-export async function getWeatherByCityID(id) {
-  const { data } = await API.get(`${apiWeatherAuth}&id=${id}`);
-  return data;
-}
+// export async function getWeatherByCityID(id) {
+//   const { data } = await API.get(`${apiWeatherAuth}&id=${id}`);
+//   return data;
+// }

@@ -10,14 +10,12 @@ function App() {
   return (
     <React.Fragment>
       <ToastContainer />
-      <main className="container">
-        <Switch>
-          <Route path="/weather" component={Weather} />
-          <Route path="/404" component={NotFound} />
-          <Redirect from="/" exact to="/weather" />
-          <Redirect to="/404" />
-        </Switch>
-      </main>
+      <Switch>
+        <Route path="/weather" component={Weather} />
+        <Route path="/404" component={NotFound} />
+        <Redirect from="/" exact to="/weather" />
+        <Redirect to="/404" />
+      </Switch>
     </React.Fragment>
   );
 }
