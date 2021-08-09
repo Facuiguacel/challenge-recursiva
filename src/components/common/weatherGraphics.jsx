@@ -11,7 +11,6 @@ const WeatherGraphics = ({ weatherInfo: info }) => {
         : info.clima === "ClearNight"
         ? "clearnightbg"
         : "greydaybg";
-    console.log(bgColor);
     return (
       <Card className={styles.card}>
         <Card.Body className={styles[`${bgColor}`]}>
