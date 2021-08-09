@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SearchBox from "./common/searchBox";
 import { getWeatherByCityName } from "./../services/weatherService";
-import CurrentWeatherGraphics from "./currentWeatherGraphics";
+import WeatherGraphics from "./common/weatherGraphics";
 import { toast } from "react-toastify";
 import "../include/css/weather.css";
 import { Container } from "react-bootstrap";
@@ -46,6 +46,11 @@ class Weather extends Component {
       data.weather[0].description.slice(1);
     const puntoRocio = data.main.temp - (100 - data.main.humidity) / 5;
     var dirViento = "";
+    const clima =
+      data.weather[0].main === "Clear" &&
+      (data.dt < data.sys.sunrise || data.dt > data.sys.sunset)
+        ? "ClearNight"
+        : data.weather[0].main;
     const brujula = [
       "norte",
       "noreste",
@@ -71,7 +76,7 @@ class Weather extends Component {
       hora: hora,
       temp: Math.round(data.main.temp),
       sensTerm: Math.round(data.main.feels_like),
-      clima: data.weather[0].main,
+      clima: clima,
       descripcion: descripcion,
       humedad: data.main.humidity,
       puntoRocio: Math.round(puntoRocio),
@@ -90,12 +95,12 @@ class Weather extends Component {
     const { isSearching, weatherInfo, ciudadEncontrada } = this.state;
     return (
       <React.Fragment>
-        <Container style={{ maxWidth: "36rem" }}>
+        <Container style={{ maxWidth: "552px", minWidth: "330px" }}>
           <SearchBox onSearch={this.handleSearch} isSearching={isSearching} />
           {!ciudadEncontrada && !isSearching && (
-            <h5 className="errorFont">Ciudad no encontrada</h5>
+            <div className="errorFont">Ciudad no encontrada</div>
           )}
-          <CurrentWeatherGraphics weatherInfo={weatherInfo} />
+          <WeatherGraphics weatherInfo={weatherInfo} />
         </Container>
       </React.Fragment>
     );

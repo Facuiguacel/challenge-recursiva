@@ -1,0 +1,52 @@
+body {
+  font-family: "Roboto";
+}
+
+.listGroup {
+  background-color: #fefefe;
+}
+
+.card {
+  max-width: 552px;
+  min-width: 330px;
+}
+
+.cleardaybg {
+  background: rgb(156, 232, 255);
+
+  color: #2c2c2c;
+}
+.clearnightbg {
+  background: rgb(9, 54, 90);
+  color: #ebebeb;
+}
+.greydaybg {
+  background: rgb(198, 212, 221);
+  color: #2c2c2c;
+}
+
+.descVisual {
+  text-align: center;
+  font-size: 25px;
+}
+
+.sensTerm {
+  font-size: 20px;
+}
+
+.temperatura {
+  font-size: 80px;
+}
+
+.detalles {
+  color: #5f5f5f;
+}
+
+.emptyCard {
+  max-width: 552px;
+  min-width: 320px;
+  height: 540px;
+  background-color: #efefef;
+  text-align: center;
+  color: rgb(124, 124, 124);
+}

@@ -20,7 +20,6 @@ const SearchBox = ({ onSearch, isSearching }) => {
         }}
         aria-describedby="basic-addon2"
       />
-
       <Button
         variant="outline-secondary"
         id="button-addon2"
