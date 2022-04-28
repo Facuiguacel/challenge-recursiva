@@ -16,9 +16,7 @@ class Weather extends Component {
   handleSearch = async (query) => {
     this.setState({ isSearching: true });
     try {
-      const weatherInfo = this.formatWeatherData(
-        await getWeatherByCityName(query)
-      );
+      const weatherInfo = this.formatWeatherData(await getWeatherByCityName(query));
       this.setState({ weatherInfo, ciudadEncontrada: true });
     } catch (ex) {
       if (ex.response)
@@ -41,27 +39,17 @@ class Weather extends Component {
     date = new Date(0);
     date.setSeconds(data.sys.sunset + data.timezone);
     const atardecer = date.toISOString().substr(11, 5);
-    const descripcion =
-      data.weather[0].description.charAt(0).toUpperCase() +
-      data.weather[0].description.slice(1);
+    const descripcion = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
     const puntoRocio = data.main.temp - (100 - data.main.humidity) / 5;
-    var dirViento = "";
     const clima =
-      data.weather[0].main === "Clear" &&
-      (data.dt < data.sys.sunrise || data.dt > data.sys.sunset)
+      data.weather[0].main === "Clear" && (data.dt < data.sys.sunrise || data.dt > data.sys.sunset)
         ? "ClearNight"
         : data.weather[0].main;
-    const brujula = [
-      "norte",
-      "noreste",
-      "este",
-      "sudoeste",
-      "sur",
-      "sudoeste",
-      "oeste",
-      "noroeste",
-      "norte",
-    ];
+
+    var dirViento = "";
+    const brujula = ["norte", "noreste", "este", "sudoeste", "sur", "sudoeste", "oeste", "noroeste", "norte"];
+
+    // Parsea la direccion del viento de grados a sus respectivo rango de la rosa de los vientos (norte, sur, este, oeste, etc.)
     var cont = 0;
     for (let i = 0; i <= 360; i += 45) {
       if (data.wind.deg - i < 22.5 && data.wind.deg - i > -22.5) {
@@ -73,19 +61,19 @@ class Weather extends Component {
     const weatherInfo = {
       ciudad: data.name,
       pais: data.sys.country,
-      hora: hora,
+      hora,
       temp: Math.round(data.main.temp),
       sensTerm: Math.round(data.main.feels_like),
-      clima: clima,
-      descripcion: descripcion,
+      clima,
+      descripcion,
       humedad: data.main.humidity,
       puntoRocio: Math.round(puntoRocio),
       presion: data.main.pressure,
       visibilidad: Math.round(data.visibility / 100) / 10,
       velViento: Math.round(data.wind.speed * 3.6),
-      dirViento: dirViento,
-      atardecer: atardecer,
-      amanecer: amanecer,
+      dirViento,
+      atardecer,
+      amanecer,
     };
 
     return weatherInfo;
@@ -97,9 +85,7 @@ class Weather extends Component {
       <React.Fragment>
         <Container style={{ maxWidth: "552px", minWidth: "330px" }}>
           <SearchBox onSearch={this.handleSearch} isSearching={isSearching} />
-          {!ciudadEncontrada && !isSearching && (
-            <div className="errorFont">Ciudad no encontrada</div>
-          )}
+          {!ciudadEncontrada && !isSearching && <div className="errorFont">Ciudad no encontrada</div>}
           <WeatherGraphics weatherInfo={weatherInfo} />
         </Container>
       </React.Fragment>
