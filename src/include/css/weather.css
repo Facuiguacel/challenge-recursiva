@@ -6,3 +6,16 @@
 .capitalize {
   text-transform: capitalize;
 }
+
+.softText {
+  padding: 20px;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.softText a {
+  color: #aaa;
+}
+.softText a:hover {
+  color: #888;
+}

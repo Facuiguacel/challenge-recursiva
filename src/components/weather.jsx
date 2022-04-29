@@ -87,6 +87,13 @@ class Weather extends Component {
           <SearchBox onSearch={this.handleSearch} isSearching={isSearching} />
           {!ciudadEncontrada && !isSearching && <div className="errorFont">Ciudad no encontrada</div>}
           <WeatherGraphics weatherInfo={weatherInfo} />
+          <p className="softText">
+            Aplicación creada con React.js en 3 dias (aprox. 8hs de trabajo) como parte del desafío de una entrevista
+            laboral. Para obtener los datos del clima utiliza la API de{" "}
+            <a href="https://openweathermap.org/api">OpenWeather</a>.
+            <br style={{ marginBottom: 5 }} />
+            Desarrolada por <a href="https://facuiguacel.vercel.app">Facundo Iguacel</a>
+          </p>
         </Container>
       </React.Fragment>
     );
